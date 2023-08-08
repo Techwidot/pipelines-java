@@ -11,7 +11,7 @@ pipeline {
  
 
     stages {
-        stage('Checkout') {
+        stage('Preparation') {
             steps {
                 // Get some code from a GitHub repository
                 git branch: 'main',
@@ -32,7 +32,7 @@ pipeline {
 
             }
         }
-        stage('Deploy'){
+        stage('Test'){
             steps{
                 echo "Deploy stage"
             }
