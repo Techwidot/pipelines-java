@@ -22,13 +22,15 @@ pipeline {
         }
 
         stage('Build'){
-            script{
-                sh mvn compile
-            }
-
-            post{
-                success{
-                echo "Build is succesfull ! :)"
+            steps{
+                script{
+                    sh mvn compile
+                }
+    
+                post{
+                    success{
+                    echo "Build is succesfull ! :)"
+                    }
                 }
             }
         }
