@@ -49,7 +49,7 @@ pipeline {
         stage("Email"){
             steps{
                 echo 'Sending email notification ...'
-                mail to: 'chanben16601@gmail.com',
+                mail to: 'doteshbendale16@gmail.com',
                 subject: "Pipeline build is successfull",
                 body: "Test email notification for pipeline"
 
