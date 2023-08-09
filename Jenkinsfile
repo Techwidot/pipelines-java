@@ -24,7 +24,7 @@ pipeline {
         stage('Build'){
             steps{
                 script{
-                    sh mvn compile
+                    sh 'mvn compile'
                 }
     
                 post{
