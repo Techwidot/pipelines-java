@@ -22,7 +22,7 @@ pipeline {
         }
 
         stage('Build'){
-            steps{
+            script{
                 sh mvn compile
             }
 
