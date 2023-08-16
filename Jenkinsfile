@@ -1,65 +1,51 @@
 pipeline {
     agent any
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "M3"
+    }
+
     stages {
-        stage('Prepare') {
+        stage('Checkout') {
             steps {
                 // Get some code from a GitHub repository
-                git branch: 'main',
-                    url: 'https://github.com/mycloud-practice/pipeline_test.git'
+            git branch:'main',
+                url:'https://gitlab.com/chanben16601/tomcatwebhookdeploy.git'
+
+            }            
+        }
+
+        stage('Build') {
+            steps{
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
             }
+                // Run Maven on a Unix agent.
+                // To run Maven on a Windows agent, use
+                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+        }
 
- 
-
+        stage('Deploy') {
+            steps {
+                echo "Deploy stage started >>>>"
+                deploy adapters: [tomcat9 (
+                    credentialsId: 'tomcat',
+                    path: '',
+                    url: 'http://20.231.91.8:8088/'
+                )],
+                contextPath: 'tomcat',
+                onFailure: 'false',
+                war: '**/*.war'
+            }
+            
             post {
+                // If Maven was able to run the tests, even if some of the test
+                // failed, record the test results and archive the jar file.
                 success {
-                    echo "Preparation is successfull ! :)"
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.war'
                 }
             }
         }
-
- 
-
-        stage('Build'){
-            steps{
-                echo "Building"
-            }
-
- 
-
-            post{
-                success{
-                echo "Build is succesfull ! :)"
-                }
-            }
-        }
-
- 
-
-        stage('Test'){
-            steps{                
-                  echo "Testing"
-            }
-            post{
-                success{
-                echo "Test done" 
-                }
-            }
-        }
-
- 
-
-        stage("Deploy"){
-            steps{
-                echo 'Deploying'
-            }
-            post{
-                success{
-                    echo "Deployment done"
-                }
-            }
-        }
-
- 
-
     }
 }
