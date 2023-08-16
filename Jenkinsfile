@@ -11,7 +11,7 @@ pipeline {
             steps {
                 // Get some code from a GitHub repository
             git branch:'main',
-                url:'https://gitlab.com/chanben16601/tomcatwebhookdeploy.git'
+                url:'https://github.com/Techwidot/pipelines-java.git'
 
             }            
         }
