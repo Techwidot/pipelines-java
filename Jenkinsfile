@@ -9,19 +9,7 @@ pipeline {
     }
 
     stages {
-        // stage('Checkout') {
-
-        //     steps {
-
-        //         // Get some code from a GitHub repository
-
-        //         git branch: 'main',
-
-        //             url: ''
-
-        //     }
-
-        // }
+    
 
         stage('Checkout') {
             steps {
